@@ -1,0 +1,197 @@
+TAP version 13
+# Subtest: initial dashboard renders score and all sample findings
+ok 1 - initial dashboard renders score and all sample findings
+  ---
+  duration_ms: 1.308847
+  type: 'test'
+  ...
+# Subtest: detail action resolves and reopens issue, updating dashboard
+ok 2 - detail action resolves and reopens issue, updating dashboard
+  ---
+  duration_ms: 9.789631
+  type: 'test'
+  ...
+# Subtest: search input updates the rendered table and preserves focus
+ok 3 - search input updates the rendered table and preserves focus
+  ---
+  duration_ms: 2.936495
+  type: 'test'
+  ...
+# Subtest: invalid JSON keeps input dialog open and shows actionable error
+ok 4 - invalid JSON keeps input dialog open and shows actionable error
+  ---
+  duration_ms: 0.368587
+  type: 'test'
+  ...
+# Subtest: JSON import replaces dataset and escapes hostile markup
+ok 5 - JSON import replaces dataset and escapes hostile markup
+  ---
+  duration_ms: 3.218563
+  type: 'test'
+  ...
+# Subtest: manual input creates valid report and category recommendation
+ok 6 - manual input creates valid report and category recommendation
+  ---
+  duration_ms: 3.824492
+  type: 'test'
+  ...
+# Subtest: example loader requires replace confirmation then restores sample
+ok 7 - example loader requires replace confirmation then restores sample
+  ---
+  duration_ms: 5.418014
+  type: 'test'
+  ...
+# Subtest: JSON upload reads file locally; oversized uploads show error
+ok 8 - JSON upload reads file locally; oversized uploads show error
+  ---
+  duration_ms: 0.49106
+  type: 'test'
+  ...
+# Subtest: optional persistence stores dataset and disabling deletes it
+ok 9 - optional persistence stores dataset and disabling deletes it
+  ---
+  duration_ms: 0.314003
+  type: 'test'
+  ...
+# Subtest: report download and template download have meaningful filenames
+ok 10 - report download and template download have meaningful filenames
+  ---
+  duration_ms: 2.580787
+  type: 'test'
+  ...
+# Subtest: navigation changes page and private status remains present
+ok 11 - navigation changes page and private status remains present
+  ---
+  duration_ms: 1.764885
+  type: 'test'
+  ...
+# Subtest: clear-data confirmation removes stored data and returns to sample
+ok 12 - clear-data confirmation removes stored data and returns to sample
+  ---
+  duration_ms: 4.131303
+  type: 'test'
+  ...
+# Subtest: sample has transparent 64/100 score, six findings, four open and two urgent
+ok 13 - sample has transparent 64/100 score, six findings, four open and two urgent
+  ---
+  duration_ms: 3.22053
+  type: 'test'
+  ...
+# Subtest: resolve and reopen recalculate score without mutating original
+ok 14 - resolve and reopen recalculate score without mutating original
+  ---
+  duration_ms: 1.591176
+  type: 'test'
+  ...
+# Subtest: completing all registered findings gives 100 with no remaining priority
+ok 15 - completing all registered findings gives 100 with no remaining priority
+  ---
+  duration_ms: 0.822089
+  type: 'test'
+  ...
+# Subtest: score floor is zero even for large imports
+ok 16 - score floor is zero even for large imports
+  ---
+  duration_ms: 0.807141
+  type: 'test'
+  ...
+# Subtest: each severity follows the published weight, including informational findings
+ok 17 - each severity follows the published weight, including informational findings
+  ---
+  duration_ms: 0.835398
+  type: 'test'
+  ...
+# Subtest: priority excludes resolved findings and sorts by severity
+ok 18 - priority excludes resolved findings and sorts by severity
+  ---
+  duration_ms: 0.214539
+  type: 'test'
+  ...
+# Subtest: combined status, severity and Korean search filters
+ok 19 - combined status, severity and Korean search filters
+  ---
+  duration_ms: 0.991863
+  type: 'test'
+  ...
+# Subtest: JSON report roundtrip preserves findings, statuses and score
+ok 20 - JSON report roundtrip preserves findings, statuses and score
+  ---
+  duration_ms: 2.490576
+  type: 'test'
+  ...
+# Subtest: invalid JSON, missing target and missing title explain their error
+ok 21 - invalid JSON, missing target and missing title explain their error
+  ---
+  duration_ms: 0.654672
+  type: 'test'
+  ...
+# Subtest: empty and oversized finding sets are rejected
+ok 22 - empty and oversized finding sets are rejected
+  ---
+  duration_ms: 0.305887
+  type: 'test'
+  ...
+# Subtest: invalid severities, invalid statuses, duplicates and non-object findings rejected
+ok 23 - invalid severities, invalid statuses, duplicates and non-object findings rejected
+  ---
+  duration_ms: 0.734658
+  type: 'test'
+  ...
+# Subtest: unknown categories safely fall back and markup stays literal data
+ok 24 - unknown categories safely fall back and markup stays literal data
+  ---
+  duration_ms: 0.359121
+  type: 'test'
+  ...
+# Subtest: long inputs bounded and optional strings normalized
+ok 25 - long inputs bounded and optional strings normalized
+  ---
+  duration_ms: 0.217231
+  type: 'test'
+  ...
+# Subtest: resolving requires a meaningful verification note
+ok 26 - resolving requires a meaningful verification note
+  ---
+  duration_ms: 1.199977
+  type: 'test'
+  ...
+# Subtest: evidence hashes match the executable lab source
+ok 27 - evidence hashes match the executable lab source
+  ---
+  duration_ms: 8.239633
+  type: 'test'
+  ...
+# Subtest: generated evidence is accepted by the dashboard and yields 75/100
+ok 28 - generated evidence is accepted by the dashboard and yields 75/100
+  ---
+  duration_ms: 0.841254
+  type: 'test'
+  ...
+# Subtest: case page renders actual before/after results
+ok 29 - case page renders actual before/after results
+  ---
+  duration_ms: 0.42149
+  type: 'test'
+  ...
+# Subtest: case import requires confirmation and transfers valid local data
+ok 30 - case import requires confirmation and transfers valid local data
+  ---
+  duration_ms: 0.470797
+  type: 'test'
+  ...
+# Subtest: storage failure provides recovery instead of losing the workflow
+ok 31 - storage failure provides recovery instead of losing the workflow
+  ---
+  duration_ms: 0.48165
+  type: 'test'
+  ...
+1..31
+# tests 31
+# suites 0
+# pass 31
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3696.31474
+

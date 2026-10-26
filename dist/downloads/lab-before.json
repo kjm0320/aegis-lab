@@ -1,0 +1,42 @@
+{
+  "target": "aegis-local-lab (in-process)",
+  "source": "Codex가 실행한 합성 데이터 실습 / before",
+  "findings": [
+    {
+      "id": "LAB-001",
+      "title": "주문 조회의 객체 소유권 검증 누락",
+      "severity": "high",
+      "category": "접근 제어",
+      "location": "GET /api/orders/202",
+      "evidence": "{\"status\": 200, \"headers\": {\"Content-Type\": \"application/json; charset=utf-8\"}, \"body\": {\"id\": 202, \"owner\": \"bob\", \"item\": \"Private sample order\"}}",
+      "recommendation": "응답 생성 전에 order.owner와 인증 주체를 비교하고 불일치 시 403을 반환.",
+      "severityReason": "다른 사용자 소유 주문의 내용이 노출되는 기밀성 영향. 합성 데이터와 제한된 실습 범위에 근거한 high 분류.",
+      "status": "open",
+      "verification": ""
+    },
+    {
+      "id": "LAB-002",
+      "title": "검색 쿼리 문자열 결합으로 공개 범위 우회",
+      "severity": "high",
+      "category": "입력 검증",
+      "location": "GET /api/search",
+      "evidence": "{\"status\": 200, \"headers\": {\"Content-Type\": \"application/json; charset=utf-8\"}, \"body\": {\"products\": [{\"id\": 1, \"name\": \"Desk\"}, {\"id\": 2, \"name\": \"Notebook\"}, {\"id\": 3, \"name\": \"Internal sample\"}]}}",
+      "recommendation": "SQL 자리표시자와 바인딩 매개변수로 명령과 데이터를 분리.",
+      "severityReason": "비공개 레코드의 조회가 재현되어 high로 분류. 데이터 수정·운영 DB 침해는 시험하지 않음.",
+      "status": "open",
+      "verification": ""
+    },
+    {
+      "id": "LAB-003",
+      "title": "세션 쿠키 보호 속성 누락",
+      "severity": "medium",
+      "category": "세션 관리",
+      "location": "POST /session/refresh",
+      "evidence": "{\"status\": 200, \"headers\": {\"Content-Type\": \"application/json; charset=utf-8\", \"Set-Cookie\": \"lab_session=SYNTHETIC_ONLY; Path=/\"}, \"body\": {\"message\": \"synthetic cookie issued\"}}",
+      "recommendation": "Secure, HttpOnly, SameSite=Lax를 명시. SameSite는 실제 서비스 인증 흐름에 맞춰 별도 검토.",
+      "severityReason": "보호 속성 누락만 확인했으며 세션 탈취나 TLS 공격을 재현한 것은 아니므로 medium으로 분류.",
+      "status": "open",
+      "verification": ""
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+import {evidence,beforeReport,afterReport} from './case-data.mjs';
+import {validate,summarize} from './model.mjs';
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const friendly=(c,stage)=>{const r=c[stage];if(c.id==='LAB-001')return `HTTP ${r.status}\n${r.body.owner?'owner: '+r.body.owner+'\nitem: '+r.body.item:'body: '+JSON.stringify(r.body)}`;if(c.id==='LAB-002')return `HTTP ${r.status}\n조회 결과: ${r.body.products.length}건\n비공개 레코드: ${r.body.products.some(x=>x.id===3)?'노출됨':'미노출'}`;return `HTTP ${r.status}\nSet-Cookie:\n${r.headers['Set-Cookie']}`;};
+$('case-list').innerHTML=evidence.cases.map((c,i)=>`<article class="case"><div class="case-top"><span class="case-num">0${i+1}</span><div><h3>${esc(c.title)}</h3><p>${esc(c.id)} / ${esc(c.location)}</p></div><span class="severity ${c.severity}">${c.severity==='high'?'높음':'보통'}</span></div><div class="case-content"><div class="case-observation"><h4>TEST CONDITION</h4><p>${esc(c.condition)}</p><h4>BEFORE / 수정 전</h4><div class="response-box">${esc(friendly(c,'before'))}</div><h4>AFTER / 수정 후</h4><div class="response-box after">${esc(friendly(c,'after'))}</div></div><div class="case-analysis"><h4>ROOT CAUSE / 원인</h4><p>${esc(c.rootCause)}</p><h4>REMEDIATION / 조치</h4><p>${esc(c.fix)}</p><h4>REGRESSION / 재검증</h4><p>${esc(c.regression)}</p><h4>SEVERITY / 분류 근거</h4><p>${esc(c.reason)}</p><a class="reference" href="${esc(c.reference)}" target="_blank" rel="noopener noreferrer">OWASP 참고 가이드 ↗</a></div></div><details><summary>수정 전후 원본 응답 펼치기</summary><pre>${esc(JSON.stringify({before:c.before,after:c.after},null,2))}</pre></details></article>`).join('');
+const beforeScore=summarize(validate(beforeReport)).score,afterScore=summarize(validate(afterReport)).score;
+$('score-change').textContent=`${beforeScore} → ${afterScore}`;
+let pending;
+for(const stage of ['before','after'])$('load-'+stage).addEventListener('click',()=>{pending=stage;$('handoff-dialog').showModal();});
+$('handoff-cancel').addEventListener('click',()=>$('handoff-dialog').close());
+$('handoff-confirm').addEventListener('click',()=>{try{sessionStorage.setItem('aegis-lab-handoff-v1',JSON.stringify(pending==='before'?beforeReport:afterReport));location.href='./index.html';}catch{$('handoff-dialog').close();$('handoff-error').textContent='브라우저 저장소를 사용할 수 없습니다. 자료에서 JSON을 다운로드해 직접 가져오세요.';$('handoff-error').hidden=false;}});

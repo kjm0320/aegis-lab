@@ -1,0 +1,21 @@
+{
+  "generatedAt": "2026-10-20T06:56:24.391956+00:00",
+  "javascript": {
+    "total": 31,
+    "passed": 31,
+    "method": "Node tests; model and lightweight DOM event adapter"
+  },
+  "python": {
+    "total": 14,
+    "passed": 14,
+    "method": "in-process WSGI and SQLite regression tests"
+  },
+  "total": 45,
+  "browserQA": "not performed; browser rendering and cookie enforcement unverified",
+  "githubCI": "workflow prepared; no remote run claimed",
+  "sourceHashes": {
+    "dist/app.mjs": "e705f64dbcc071b574235a8c42a35b35b05d4d46c3a948af659f2e9ac571d954",
+    "dist/model.mjs": "dcce8bae59f1b5f6a0562b48226733d37b9e91029d57ffc19383ef1b48b02ba1",
+    "dist/portfolio.mjs": "d6f7a9f5e966ca3723b96267f885d214f7e2ad0dd7666dc5145046693ebb8c7b"
+  }
+}

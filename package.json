@@ -1,0 +1,9 @@
+{
+  "name": "aegis-lab-portfolio",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Input-based security assessment workspace and isolated remediation lab",
+  "scripts": {"test": "node --test tests/model.test.mjs tests/interactions.test.mjs tests/portfolio.test.mjs", "check": "node --check dist/app.mjs && node --check dist/model.mjs && node --check dist/portfolio.mjs"},
+  "engines": {"node": ">=20"}
+}

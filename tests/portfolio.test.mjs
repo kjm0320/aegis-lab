@@ -1,0 +1,16 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import {TestDocument} from './dom-harness.mjs';
+import {evidence,beforeReport,afterReport} from '../dist/case-data.mjs';
+import {parseInput,summarize} from '../dist/model.mjs';
+const doc=new TestDocument(await readFile(new URL('../dist/portfolio.html',import.meta.url),'utf8'));
+const storage=new Map();globalThis.document=doc;globalThis.location={href:''};globalThis.sessionStorage={setItem:(k,v)=>storage.set(k,v)};
+await import('../dist/portfolio.mjs');
+const $=id=>doc.getElementById(id),click=id=>doc.nodeEvent('click',$(id));
+test('evidence hashes match the executable lab source',async()=>{for(const [file,hash] of Object.entries(evidence.sourceHashes)){const bytes=await readFile(new URL('../'+file,import.meta.url));assert.equal(createHash('sha256').update(bytes).digest('hex'),hash);}assert.equal(evidence.tests.passed,14);assert.equal(evidence.cases.length,3);});
+test('generated evidence is accepted by the dashboard and yields 75/100',()=>{assert.equal(summarize(parseInput(JSON.stringify(beforeReport))).score,75);const after=parseInput(JSON.stringify(afterReport));assert.equal(summarize(after).score,100);assert.equal(summarize(after).resolved,3);assert.ok(after.findings.every(f=>f.verification.length>10&&f.severityReason));});
+test('case page renders actual before/after results',()=>{assert.match($('case-list').innerHTML,/HTTP 403/);assert.match($('case-list').innerHTML,/HttpOnly/);assert.match($('case-list').innerHTML,/조회 결과: 0건/);assert.equal($('score-change').textContent,'75 → 100');});
+test('case import requires confirmation and transfers valid local data',async()=>{await click('load-before');assert.equal($('handoff-dialog').open,true);assert.equal(storage.size,0);await click('handoff-cancel');assert.equal(storage.size,0);await click('load-after');await click('handoff-confirm');const d=parseInput(storage.get('aegis-lab-handoff-v1'));assert.equal(summarize(d).score,100);assert.equal(location.href,'./index.html');});
+test('storage failure provides recovery instead of losing the workflow',async()=>{sessionStorage.setItem=()=>{throw Error('unavailable')};await click('load-before');await click('handoff-confirm');assert.equal($('handoff-error').hidden,false);assert.match($('handoff-error').textContent,/JSON/);});
